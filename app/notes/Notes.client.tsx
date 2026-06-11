@@ -61,35 +61,39 @@ export default function NotesClient() {
   }
 
   return (
-    <main className={css.main}>
-      <div className={css.container}>
+    <main className={css.app}>
+      <div className={css.toolbar}>
         <SearchBox value={search} onChange={handleSearchChange} />
 
-        <button type="button" className={css.button} onClick={() => setIsModalOpen(true)}>
+        <button
+          type="button"
+          className={css.button}
+          onClick={() => setIsModalOpen(true)}
+        >
           Create note +
         </button>
-
-        {data && data.notes.length > 0 && (
-          <NoteList notes={data.notes} onDelete={handleDeleteNote} />
-        )}
-
-        {data && data.totalPages > 1 && (
-          <Pagination
-            page={page}
-            totalPages={data.totalPages}
-            onPageChange={setPage}
-          />
-        )}
-
-        {isModalOpen && (
-          <Modal onClose={() => setIsModalOpen(false)}>
-            <NoteForm
-              onSubmit={handleCreateNote}
-              onCancel={() => setIsModalOpen(false)}
-            />
-          </Modal>
-        )}
       </div>
+
+      {data && data.notes.length > 0 && (
+        <NoteList notes={data.notes} onDelete={handleDeleteNote} />
+      )}
+
+      {data && data.totalPages > 1 && (
+        <Pagination
+          page={page}
+          totalPages={data.totalPages}
+          onPageChange={setPage}
+        />
+      )}
+
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <NoteForm
+            onSubmit={handleCreateNote}
+            onCancel={() => setIsModalOpen(false)}
+          />
+        </Modal>
+      )}
     </main>
   );
 }
