@@ -9,6 +9,7 @@ import NoteList from '@/components/NoteList/NoteList';
 import Pagination from '@/components/Pagination/Pagination';
 import NoteForm from '@/components/NoteForm/NoteForm';
 import Modal from '@/components/Modal/Modal';
+import css from './NotesPage.module.css';
 
 export default function NotesClient() {
   const [search, setSearch] = useState('');
@@ -60,33 +61,35 @@ export default function NotesClient() {
   }
 
   return (
-    <main>
-      <SearchBox value={search} onChange={handleSearchChange} />
+    <main className={css.main}>
+      <div className={css.container}>
+        <SearchBox value={search} onChange={handleSearchChange} />
 
-      <button type="button" onClick={() => setIsModalOpen(true)}>
-        Create note +
-      </button>
+        <button type="button" className={css.button} onClick={() => setIsModalOpen(true)}>
+          Create note +
+        </button>
 
-      {data && data.notes.length > 0 && (
-        <NoteList notes={data.notes} onDelete={handleDeleteNote} />
-      )}
+        {data && data.notes.length > 0 && (
+          <NoteList notes={data.notes} onDelete={handleDeleteNote} />
+        )}
 
-      {data && data.totalPages > 1 && (
-        <Pagination
-          page={page}
-          totalPages={data.totalPages}
-          onPageChange={setPage}
-        />
-      )}
-
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <NoteForm
-            onSubmit={handleCreateNote}
-            onCancel={() => setIsModalOpen(false)}
+        {data && data.totalPages > 1 && (
+          <Pagination
+            page={page}
+            totalPages={data.totalPages}
+            onPageChange={setPage}
           />
-        </Modal>
-      )}
+        )}
+
+        {isModalOpen && (
+          <Modal onClose={() => setIsModalOpen(false)}>
+            <NoteForm
+              onSubmit={handleCreateNote}
+              onCancel={() => setIsModalOpen(false)}
+            />
+          </Modal>
+        )}
+      </div>
     </main>
   );
 }
